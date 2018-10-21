@@ -14,6 +14,14 @@ class GameWindow : public QMainWindow
 public:
     explicit GameWindow(QWidget *parent = nullptr);
     ~GameWindow();
+    void setScore(int score);
+    void setStartButton(bool active);
+    void setBlueButton(bool active);
+    void setRedButton(bool active);
+    void setProgressBar(int value);
+    bool isEasyModeChecked();
+
+
 
 private:
     Ui::GameWindow *ui;

@@ -10,6 +10,7 @@ class GameModel
     std::vector<std::string> correctSeries;
     std::vector<std::string> currentSeries;
     bool isCurrentSeriesValid();
+    int currentProgress;
 
 public:
     GameModel();
@@ -17,6 +18,9 @@ public:
     void createNextMove();
     bool handlePlayersMove(std::string move);
     void resetGame();
+    int getCurrentProgress();
+    int getCurrentScore();
+    std::string getNextColor();
 
 };
 

@@ -4,6 +4,7 @@
 GameModel::GameModel()
 {
     this->currentScore = 0;
+    this->currentProgress = 0;
 }
 
 std::vector<std::string> GameModel::getMoves(){
@@ -47,4 +48,23 @@ void GameModel::resetGame(){
     this->currentScore = 0;
     this->currentSeries.clear();
     this->correctSeries.clear();
+}
+
+int GameModel::getCurrentProgress(){
+    if(this->correctSeries.size() == 0)
+        return 0;
+    if(this->currentSeries.size() == 0)
+        return 0;
+
+    return (100 * (currentSeries.size() / correctSeries.size()));
+}
+
+int GameModel::getCurrentScore(){
+    return this->currentScore;
+}
+
+std::string GameModel::getNextColor(){
+    if(this->currentScore == 0)
+        return nullptr;
+    return this->correctSeries[this->currentScore];
 }
