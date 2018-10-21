@@ -50,13 +50,13 @@
      </rect>
     </property>
     <property name="text">
-     <string>Score</string>
+     <string>Score:</string>
     </property>
    </widget>
    <widget class="QLabel" name="ScoreValue">
     <property name="geometry">
      <rect>
-      <x>70</x>
+      <x>80</x>
       <y>0</y>
       <width>67</width>
       <height>17</height>

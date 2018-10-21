@@ -11,15 +11,6 @@ std::vector<std::string> GameModel::getMoves(){
     return this->correctSeries;
 }
 
-bool GameModel::isCurrentSeriesValid(){
-    for(uint index = 0; index < this->currentSeries.size(); index++){
-        if(this->currentSeries[index].compare(this->correctSeries[index]) != 0){
-            return false;
-        }
-    }
-    return true;
-}
-
 void GameModel::createNextMove(){
     int newNumber= rand() % 2;
 
@@ -34,9 +25,7 @@ void GameModel::createNextMove(){
 }
 
 bool GameModel::handlePlayersMove(std::string move){
-    currentSeries.push_back(move);
-
-    if(isCurrentSeriesValid()){
+    if(this->correctSeries[this->currentScore].compare(move) == 0){
         this->currentScore++;
         return true;
     }else{
@@ -46,17 +35,14 @@ bool GameModel::handlePlayersMove(std::string move){
 
 void GameModel::resetGame(){
     this->currentScore = 0;
-    this->currentSeries.clear();
     this->correctSeries.clear();
 }
 
 int GameModel::getCurrentProgress(){
     if(this->correctSeries.size() == 0)
         return 0;
-    if(this->currentSeries.size() == 0)
-        return 0;
 
-    return (100 * (currentSeries.size() / correctSeries.size()));
+    return (100 * (currentScore / correctSeries.size()));
 }
 
 int GameModel::getCurrentScore(){

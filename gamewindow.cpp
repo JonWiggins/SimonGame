@@ -6,7 +6,7 @@ GameWindow::GameWindow(QWidget *parent) :
     ui(new Ui::GameWindow)
 {
     ui->setupUi(this);
-    ui->RedButton->setStyleSheet( QString("QPushButton {background-color: rgb(200,50,50);} QPushButton:pressed {background-color: rgb(255,150,150);}"));
+    ui->RedButton->setStyleSheet(QString("QPushButton {background-color: rgb(200,50,50);} QPushButton:pressed {background-color: rgb(255,150,150);}"));
     ui->BlueButton->setStyleSheet(QString("QPushButton {background-color: rgb(50,50,200);} QPushButton:pressed {background-color: rgb(150,150,255);}"));
 }
 
@@ -37,4 +37,15 @@ void GameWindow::setProgressBar(int value){
 
 bool GameWindow::isEasyModeChecked(){
     return ui->EasyModeBox->checkState();
+}
+
+void GameWindow::displayMoveSeries(std::vector<std::string> moveSeries){
+    for(std::string move : moveSeries){
+        if(move.compare("red") != 0){
+            //TODO change this number as the score gets higher to make it harder
+            ui->RedButton->animateClick(100);
+        }else{
+            ui->BlueButton->animateClick(100);
+        }
+    }
 }

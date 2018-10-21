@@ -8,8 +8,6 @@ class GameModel
 {
     int currentScore;
     std::vector<std::string> correctSeries;
-    std::vector<std::string> currentSeries;
-    bool isCurrentSeriesValid();
     int currentProgress;
 
 public:

@@ -20,8 +20,7 @@ public:
     void setRedButton(bool active);
     void setProgressBar(int value);
     bool isEasyModeChecked();
-
-
+    void displayMoveSeries(std::vector<std::string>);
 
 private:
     Ui::GameWindow *ui;
