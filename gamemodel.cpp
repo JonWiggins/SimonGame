@@ -1,10 +1,9 @@
 #include "gamemodel.h"
 #include <iostream>
 
-GameModel::GameModel()
-{
+GameModel::GameModel(){
+
     this->currentScore = 0;
-    this->currentProgress = 0;
 }
 
 std::vector<std::string> GameModel::getMoves(){
@@ -24,33 +23,60 @@ void GameModel::createNextMove(){
     }
 }
 
-bool GameModel::handlePlayersMove(std::string move){
-    if(this->correctSeries[this->currentScore].compare(move) == 0){
-        this->currentScore++;
-        return true;
-    }else{
-        return false;
+void GameModel::handlePlayersMove(std::string move){
+
+    currentSeries.push_back(move);
+
+    for(uint index = 0; index < currentSeries.size(); index++){
+        if(this->currentSeries[index].compare(this->correctSeries[index]) != 0 ){
+            emit GameOverSignal();
+        }
+    }
+
+    this->currentScore++;
+
+    if(this->correctSeries.size() == this->currentSeries.size()){
+        resetRound();
+        createNextMove();
+        emit computerTurnSignal(this->currentSeries);
     }
 }
 
 void GameModel::resetGame(){
     this->currentScore = 0;
     this->correctSeries.clear();
+    this->currentSeries.clear();
+}
+
+void GameModel::resetRound(){
+    this->currentSeries.clear();
+
+}
+
+void GameModel::startGame(){
+    createNextMove();
+    resetGame();
+    emit computerTurnSignal(this->currentSeries);
 }
 
 int GameModel::getCurrentProgress(){
     if(this->correctSeries.size() == 0)
         return 0;
 
-    return (100 * (currentScore / correctSeries.size()));
+    return (100 * (currentSeries.size() / correctSeries.size()));
 }
 
 int GameModel::getCurrentScore(){
     return this->currentScore;
 }
 
+void GameModel::updateWindow(){
+    emit setProgressSignal(getCurrentProgress());
+    emit setScoreSignal(this->currentScore);
+}
+
 std::string GameModel::getNextColor(){
     if(this->currentScore == 0)
         return nullptr;
-    return this->correctSeries[this->currentScore];
+    return this->correctSeries[this->currentSeries.size()];
 }
