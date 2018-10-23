@@ -1,9 +1,6 @@
 #include "gamewindow.h"
 #include "ui_gamewindow.h"
 #include <iostream>
-#include <thread>
-#include <chrono>
-#include <QTimer>
 
 GameWindow::GameWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -13,8 +10,11 @@ GameWindow::GameWindow(QWidget *parent) :
     ui->RedButton->setStyleSheet(QString("QPushButton {background-color: rgb(200,50,50);} QPushButton:pressed {background-color: rgb(255,150,150);}"));
     ui->BlueButton->setStyleSheet(QString("QPushButton {background-color: rgb(50,50,200);} QPushButton:pressed {background-color: rgb(150,150,255);}"));
 
-    //QObject::connect(ui->penWidthSpinBox, (void (QSpinBox::*)(int))&QSpinBox::valueChanged, this, &DrawingDemo::valuesChanged);
-
+    setBlueButton(false);
+    setRedButton(false);
+    setStartButton(true);
+    setScore(0);
+    setProgressBar(0);
 }
 
 GameWindow::~GameWindow()
@@ -49,7 +49,7 @@ bool GameWindow::isEasyModeChecked(){
 }
 
 void GameWindow::pushRed(){
-    ui->RedButton->setStyleSheet(QString("QPushButton {background-color: rgb(150,50,50);} QPushButton:pressed {background-color: rgb(255,150,150);}"));
+    ui->RedButton->setStyleSheet(QString("QPushButton {background-color: rgb(75,50,50);} QPushButton:pressed {background-color: rgb(255,150,150);}"));
 }
 
 void GameWindow::unpushRed(){
@@ -57,14 +57,14 @@ void GameWindow::unpushRed(){
 }
 
 void GameWindow::pushBlue(){
-    ui->BlueButton->setStyleSheet(QString("QPushButton {background-color: rgb(50,50,150);} QPushButton:pressed {background-color: rgb(150,150,255);}"));
+    ui->BlueButton->setStyleSheet(QString("QPushButton {background-color: rgb(50,50,75);} QPushButton:pressed {background-color: rgb(150,150,255);}"));
 }
 
 void GameWindow::unpushBlue(){
     ui->BlueButton->setStyleSheet(QString("QPushButton {background-color: rgb(50,50,200);} QPushButton:pressed {background-color: rgb(150,150,255);}"));
 }
 
-void GameWindow::computerTurn(std::vector<std::string> turnList){
+void GameWindow::startComputerTurn(){
     std::cout << "computer turn" << std::endl;
 
     setBlueButton(false);
@@ -85,6 +85,7 @@ void GameWindow::gameOver(){
     setStartButton(true);
     setScore(0);
     setProgressBar(0);
+    ui->GameOverLabel->setText("Game Over.");
 
 }
 
@@ -92,6 +93,7 @@ void GameWindow::on_StartButton_clicked(){
     setBlueButton(false);
     setRedButton(false);
     setStartButton(false);
+    ui->GameOverLabel->setText(QString(""));
 
     emit updateWindow();
     emit startGameSignal();

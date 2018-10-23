@@ -105,6 +105,19 @@
      <string>Start Game</string>
     </property>
    </widget>
+   <widget class="QLabel" name="GameOverLabel">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>180</y>
+      <width>91</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">

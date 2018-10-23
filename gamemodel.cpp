@@ -49,6 +49,7 @@ void GameModel::handlePlayersMove(std::string move){
         resetRound();
         createNextMove();
         updateWindow();
+        emit computerTurnSignal();
         computerTurn();
     }
 }
@@ -66,16 +67,19 @@ void GameModel::resetRound(){
 }
 
 void GameModel::computerTurn(){
-    for(std::string move : correctSeries){
-        if(move.compare("red") == 0){
-            emit pushRedSignal(); //TODO change based on length
-            QTimer::singleShot(100, this, &GameModel::unpushRedSignal);
+    int time = 1000 - (75 * correctSeries.size());
+    int timeBuffer = 200;
+
+    for(uint index = 0; index < correctSeries.size(); index++){
+        if(correctSeries[index].compare("red") == 0){
+            QTimer::singleShot((time * index) + (timeBuffer * index), this, &GameModel::pushRedSignal);
+            QTimer::singleShot((time * index) + (timeBuffer * index) + time, this, &GameModel::unpushRedSignal);
         }else{
-            emit pushBlueSignal();
-            QTimer::singleShot(100, this, &GameModel::unpushBlueSignal);
+            QTimer::singleShot((time * index)+ (timeBuffer * index), this, &GameModel::pushBlueSignal);
+            QTimer::singleShot((time * index)+ (timeBuffer * index) + time, this, &GameModel::unpushBlueSignal);
         }
     }
-
+    QTimer::singleShot((correctSeries.size() * time) + (timeBuffer * correctSeries.size()) + 100, this, &GameModel::startPlayerTurnSignal);
 }
 
 void GameModel::startGame(){

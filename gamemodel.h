@@ -33,12 +33,13 @@ public slots:
 signals:
     void setProgressSignal(int currentProgress);
     void setScoreSignal(int score);
-    void computerTurnSignal(std::vector<std::string> turns);
+    void computerTurnSignal();
     void GameOverSignal();
     void pushRedSignal();
     void pushBlueSignal();
     void unpushRedSignal();
     void unpushBlueSignal();
+    void startPlayerTurnSignal();
 
 
 };

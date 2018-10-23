@@ -19,7 +19,6 @@ public:
     void setBlueButton(bool active);
     void setRedButton(bool active);
     bool isEasyModeChecked();
-    void displayMoveSeries(std::vector<std::string>);
     void startPressed();
     void startPlayerTurn();
 
@@ -29,19 +28,19 @@ public slots:
     void setScore(int score);
     void on_BlueButton_clicked();
     void on_StartButton_clicked();
-    void computerTurn(std::vector<std::string> moves);
+    void startComputerTurn();
     void gameOver();
-
+    void pushRed();
+    void unpushRed();
+    void pushBlue();
+    void unpushBlue();
 
 signals:
     void updateWindow();
     void startGameSignal();
     void playerTurn();
     void playerPlaySignal(std::string move);
-    void pushRed();
-    void unpushRed();
-    void pushBlue();
-    void unpushBlue();
+
 
 private:
     Ui::GameWindow *ui;
