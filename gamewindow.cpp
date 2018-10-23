@@ -1,5 +1,9 @@
 #include "gamewindow.h"
 #include "ui_gamewindow.h"
+#include <iostream>
+#include <thread>
+#include <chrono>
+#include <QTimer>
 
 GameWindow::GameWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -35,6 +39,8 @@ void GameWindow::setRedButton(bool active){
 }
 
 void GameWindow::setProgressBar(int value){
+    ui->progressBar->setRange(0, 100);
+    std::cout << "set percentage: " << value << std::endl;
     ui->progressBar->setValue(value);
 }
 
@@ -42,25 +48,28 @@ bool GameWindow::isEasyModeChecked(){
     return ui->EasyModeBox->checkState();
 }
 
-void GameWindow::displayMoveSeries(std::vector<std::string> moveSeries){
-    for(std::string move : moveSeries){
-        if(move.compare("red") == 0){
-            //TODO change this number as the score gets higher to make it harder
-            ui->RedButton->animateClick(100);
-        }else{
-            ui->BlueButton->animateClick(100);
-        }
-    }
+void GameWindow::pushRed(){
+    ui->RedButton->setStyleSheet(QString("QPushButton {background-color: rgb(150,50,50);} QPushButton:pressed {background-color: rgb(255,150,150);}"));
+}
+
+void GameWindow::unpushRed(){
+    ui->RedButton->setStyleSheet(QString("QPushButton {background-color: rgb(200,50,50);} QPushButton:pressed {background-color: rgb(255,150,150);}"));
+}
+
+void GameWindow::pushBlue(){
+    ui->BlueButton->setStyleSheet(QString("QPushButton {background-color: rgb(50,50,150);} QPushButton:pressed {background-color: rgb(150,150,255);}"));
+}
+
+void GameWindow::unpushBlue(){
+    ui->BlueButton->setStyleSheet(QString("QPushButton {background-color: rgb(50,50,200);} QPushButton:pressed {background-color: rgb(150,150,255);}"));
 }
 
 void GameWindow::computerTurn(std::vector<std::string> turnList){
+    std::cout << "computer turn" << std::endl;
+
     setBlueButton(false);
     setRedButton(false);
     setStartButton(false);
-
-    displayMoveSeries(turnList);
-
-    startPlayerTurn();
 }
 
 void GameWindow::startPlayerTurn(){
@@ -69,6 +78,15 @@ void GameWindow::startPlayerTurn(){
     setStartButton(false);
 }
 
+void GameWindow::gameOver(){
+    std::cout << "game over" << std::endl;
+    setBlueButton(false);
+    setRedButton(false);
+    setStartButton(true);
+    setScore(0);
+    setProgressBar(0);
+
+}
 
 void GameWindow::on_StartButton_clicked(){
     setBlueButton(false);

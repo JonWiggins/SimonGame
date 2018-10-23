@@ -23,12 +23,6 @@ public:
     void startPressed();
     void startPlayerTurn();
 
-signals:
-    void updateWindow();
-    void startGameSignal();
-    void playerTurn();
-    void playerPlaySignal(std::string move);
-
 public slots:
     void on_RedButton_clicked();
     void setProgressBar(int value);
@@ -36,6 +30,18 @@ public slots:
     void on_BlueButton_clicked();
     void on_StartButton_clicked();
     void computerTurn(std::vector<std::string> moves);
+    void gameOver();
+
+
+signals:
+    void updateWindow();
+    void startGameSignal();
+    void playerTurn();
+    void playerPlaySignal(std::string move);
+    void pushRed();
+    void unpushRed();
+    void pushBlue();
+    void unpushBlue();
 
 private:
     Ui::GameWindow *ui;

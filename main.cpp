@@ -18,9 +18,11 @@ int main(int argc, char *argv[])
     QObject::connect(&gameModel, (void (GameModel::*)(int))&GameModel::setScoreSignal, &window, &GameWindow::setScore);
     QObject::connect(&gameModel, (void (GameModel::*)(int))&GameModel::setProgressSignal, &window, &GameWindow::setProgressBar);
     QObject::connect(&gameModel, (void (GameModel::*)(std::vector<std::string>))&GameModel::computerTurnSignal, &window, &GameWindow::computerTurn);
+    QObject::connect(&gameModel, (void (GameModel::*)(void))&GameModel::GameOverSignal, &window, &GameWindow::gameOver);
     QObject::connect(&window, (void (GameWindow::*)(std::string))&GameWindow::playerPlaySignal, &gameModel, &GameModel::handlePlayersMove);
 
-
+    QObject::connect(&gameModel, (void (GameModel::*)(void))&GameModel::pushRedSignal, &window, &GameWindow::pushRed);
+    window.gameOver();
 
     window.show();
     return a.exec();

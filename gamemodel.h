@@ -5,14 +5,17 @@
 #include <QObject>
 
 
-class GameModel
+class GameModel : public QObject
 {
+    Q_OBJECT
+
     int currentScore;
     std::vector<std::string> correctSeries;
     std::vector<std::string> currentSeries;
 
 public:
     GameModel();
+    ~GameModel();
     std::vector<std::string> getMoves();
     void createNextMove();
     void resetGame();
@@ -20,6 +23,7 @@ public:
     int getCurrentScore();
     std::string getNextColor();
     void resetRound();
+    void computerTurn();
 
 public slots:
     void updateWindow();
@@ -31,6 +35,11 @@ signals:
     void setScoreSignal(int score);
     void computerTurnSignal(std::vector<std::string> turns);
     void GameOverSignal();
+    void pushRedSignal();
+    void pushBlueSignal();
+    void unpushRedSignal();
+    void unpushBlueSignal();
+
 
 };
 
